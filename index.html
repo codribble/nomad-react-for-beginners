@@ -12,86 +12,38 @@
     crossorigin
     src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
   ></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-    const MinutesToHours = () => {
-      const [amount, setAmount] = React.useState(0);
-      const [inverted, setInverted] = React.useState(false);
-
-      const onChange = (e) => {
-        const {
-          target: { value },
-        } = e;
-
-        setAmount(value);
-      };
-
-      const reset = () => setAmount(0);
-
-      const onInvert = () => {
-        reset();
-        setInverted((current) => !current);
-      };
-
+    const Btn = ({ text, fontSize = 12 }) => {
       return (
-        <div>
-          <div>
-            <label htmlFor="minutes">Minutes</label>
-            <input
-              value={inverted ? amount * 60 : amount}
-              id="minutes"
-              placeholder="Minutes"
-              type="number"
-              onChange={onChange}
-              disabled={inverted}
-            />
-          </div>
-          <div>
-            <label htmlFor="hours">Hours</label>
-            <input
-              value={inverted ? amount : Math.round(amount / 60)}
-              id="hours"
-              placeholder="Hours"
-              type="number"
-              onChange={onChange}
-              disabled={!inverted}
-            />
-          </div>
-          <button onClick={reset}>Reset</button>
-          <button onClick={onInvert}>
-            {inverted ? "Turn back" : "Invert"}
-          </button>
-        </div>
+        <button
+          style={{
+            backgroundColor: "tomato",
+            color: "white",
+            padding: "10px 20px",
+            border: 0,
+            borderRadius: 10,
+            fontSize,
+          }}
+        >
+          {text}
+        </button>
       );
     };
-
-    const KmToMiles = () => {
-      return <h3>KM 2 M</h3>;
+    Btn.propTypes = {
+      text: PropTypes.string.isReqired,
+      fontSize: PropTypes.number,
     };
 
     const App = () => {
-      const [index, setIndex] = React.useState("0");
-      const onSelect = (e) => {
-        const {
-          target: { value },
-        } = e;
-
-        setIndex(value);
-      };
-
       return (
         <div>
-          <h1>Super Converter</h1>
-          <select
-            value={index}
-            onChange={onSelect}
-          >
-            <option value="0">Minutes &amp; Hours</option>
-            <option value="1">Km &amp; Miles</option>
-          </select>
-
-          {index === "0" ? <MinutesToHours /> : null}
-          {index === "1" ? <KmToMiles /> : null}
+          <Btn
+            text="Save Changes"
+            fontSize={18}
+          />
+          <Btn text={"Continue"} />
         </div>
       );
     };
