@@ -18,6 +18,19 @@ function App() {
   useEffect(() => {
     console.log("I run when 'keyword & counter' changes.");
   }, [keyword, counter]);
+
+  const [showing, setShowing] = useState(false);
+  function Hello() {
+    useEffect(() => {
+      console.log("hi :)");
+      return () => console.log("bye :(");
+    }, []);
+
+    return <h1>Hello</h1>;
+  }
+
+  const onToggle = () => setShowing((prev) => !prev);
+
   return (
     <div>
       <input
@@ -28,6 +41,9 @@ function App() {
       />
       <h1>{counter}</h1>
       <button onClick={onClick}>click me</button>
+
+      {showing ? <Hello /> : null}
+      <button onClick={onToggle}>{showing ? "Hide" : "Show"}</button>
     </div>
   );
 }
