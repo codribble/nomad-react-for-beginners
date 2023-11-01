@@ -33,10 +33,3 @@ ol {
   height: 100dvh;
   font-size: 50px;
 }
-
-.movieList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  padding: 0 100px;
-}

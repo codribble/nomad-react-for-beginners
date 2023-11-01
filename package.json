@@ -40,5 +40,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://codribble.github.io/nomad-react-for-beginners"
+  "homepage": "https://codribble.github.io/nomad-react-for-beginners",
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+  }
 }

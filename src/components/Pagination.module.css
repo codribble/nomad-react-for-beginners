@@ -1,0 +1,14 @@
+.paging {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  /* margin-top: 20px; */
+  padding: 20px 0;
+}
+
+.paging .page a {
+  display: block;
+  color: black;
+  text-decoration: none;
+}

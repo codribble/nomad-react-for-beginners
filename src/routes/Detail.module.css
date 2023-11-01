@@ -10,16 +10,14 @@
 }
 
 .btnExit {
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  z-index: 1;
+  margin-bottom: 30px;
 }
 .btnExit a {
   position: relative;
   display: block;
   width: 30px;
   height: 30px;
+  margin: 0 auto;
 }
 .btnExit a::before,
 .btnExit a::after {
@@ -61,6 +59,7 @@
   width: 100%;
   height: 100%;
   background-color: rgb(0 0 0 / 0.5);
+  backdrop-filter: blur(5px);
 }
 /* .visual img {
   position: absolute;

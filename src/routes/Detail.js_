@@ -3,17 +3,20 @@ import { Link, useParams } from "react-router-dom";
 import styles from "./Detail.module.css";
 
 function Detail() {
-  const { id, page } = useParams();
+  const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState([]);
   const getMovie = async () => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=15929ba73ea97df7f30164465b7ea21f`
+      `https://yts.mx/api/v2/movie_details.json?movie_id=${id}`
     );
 
     const json = await response.json();
+    // const json = await (
+    //   await fetch(`https://yts.mx/api/v2/movie_details.json?movie_id=${id}`)
+    // ).json();
 
-    setMovie(json);
+    setMovie(json.data.movie);
     setLoading(false);
   };
 
@@ -24,7 +27,7 @@ function Detail() {
   // console.log(movie);
 
   const RatingStar = () => {
-    const rating = (movie.vote_average / 2).toFixed(1);
+    const rating = (movie.rating / 2).toFixed(1);
     const integer = "" + rating.toString().split(".")[0];
     const decimal =
       "" + rating.toString().split(".")[1]
@@ -71,24 +74,20 @@ function Detail() {
     <>
       {loading ? null : (
         <section className={styles.movie}>
+          <div className={styles.btnExit}>
+            <Link
+              to="/"
+              title="목록"
+            >
+              <span className={styles.soundOnly}>목록</span>
+            </Link>
+          </div>
+
           <div
             className={styles.visual}
-            style={{
-              backgroundImage: `url(https://image.tmdb.org/t/p/w1280${movie.backdrop_path})`,
-            }}
+            style={{ backgroundImage: `url(${movie.background_image})` }}
           >
             <div className={styles.info}>
-              <div className={styles.btnExit}>
-                <Link
-                  to={`/list/${page}`}
-                  title="목록"
-                >
-                  {/* <button className={styles.btnBack}> */}
-                  <span className={styles.soundOnly}>목록</span>
-                  {/* </button> */}
-                </Link>
-              </div>
-
               <h1 className={styles.title}>{movie.title}</h1>
 
               <div className={styles.details}>
@@ -96,12 +95,12 @@ function Detail() {
                   <dt className={styles.soundOnly}>평점</dt>
                   <dd className={styles.ratingWrap}>
                     <RatingStar />
-                    <p>{movie.vote_average}</p>
+                    <p>{movie.rating}</p>
                   </dd>
                 </dl>
                 <dl>
                   <dt className={styles.soundOnly}>개봉</dt>
-                  <dd>{movie.release_date} 개봉</dd>
+                  <dd>{movie.year}년 개봉</dd>
                 </dl>
                 <dl>
                   <dt className={styles.soundOnly}>상영시간</dt>
@@ -111,13 +110,13 @@ function Detail() {
 
               <ul className={styles.genres}>
                 {movie.genres.map((g) => (
-                  <li key={g.id}>{g.name}</li>
+                  <li key={g}>{g}</li>
                 ))}
               </ul>
 
-              {movie.overview !== "" ? (
+              {movie.description_full !== "" ? (
                 <div className={styles.desc}>
-                  <p>{movie.overview}</p>
+                  <p>{movie.description_full}</p>
                 </div>
               ) : null}
             </div>
