@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
 import styles from "./Detail.module.css";
 
-function Detail() {
-  const { id, page } = useParams();
+export default function Detail() {
+  const { id } = useParams();
+  const location = useLocation();
+  const page = location.state.page;
   const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState([]);
   const getMovie = async () => {
@@ -12,6 +14,9 @@ function Detail() {
     );
 
     const json = await response.json();
+
+    console.log(json);
+    // console.log(location);
 
     setMovie(json);
     setLoading(false);
@@ -77,49 +82,59 @@ function Detail() {
               backgroundImage: `url(https://image.tmdb.org/t/p/w1280${movie.backdrop_path})`,
             }}
           >
-            <div className={styles.info}>
+            <div className={styles.popup}>
               <div className={styles.btnExit}>
                 <Link
-                  to={`/list/${page}`}
+                  to={`/`}
+                  state={{ page: page }}
                   title="목록"
                 >
-                  {/* <button className={styles.btnBack}> */}
                   <span className={styles.soundOnly}>목록</span>
-                  {/* </button> */}
                 </Link>
               </div>
 
-              <h1 className={styles.title}>{movie.title}</h1>
-
-              <div className={styles.details}>
-                <dl>
-                  <dt className={styles.soundOnly}>평점</dt>
-                  <dd className={styles.ratingWrap}>
-                    <RatingStar />
-                    <p>{movie.vote_average}</p>
-                  </dd>
-                </dl>
-                <dl>
-                  <dt className={styles.soundOnly}>개봉</dt>
-                  <dd>{movie.release_date} 개봉</dd>
-                </dl>
-                <dl>
-                  <dt className={styles.soundOnly}>상영시간</dt>
-                  <dd>{movie.runtime}분</dd>
-                </dl>
-              </div>
-
-              <ul className={styles.genres}>
-                {movie.genres.map((g) => (
-                  <li key={g.id}>{g.name}</li>
-                ))}
-              </ul>
-
-              {movie.overview !== "" ? (
-                <div className={styles.desc}>
-                  <p>{movie.overview}</p>
+              <div className={styles.info}>
+                <div className={styles.poster}>
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={movie.title}
+                  />
                 </div>
-              ) : null}
+
+                <div className={styles.d}>
+                  <h1 className={styles.title}>{movie.title}</h1>
+
+                  <div className={styles.details}>
+                    <dl>
+                      <dt className={styles.soundOnly}>평점</dt>
+                      <dd className={styles.ratingWrap}>
+                        <RatingStar />
+                        <p>{movie.vote_average}</p>
+                      </dd>
+                    </dl>
+                    <dl>
+                      <dt className={styles.soundOnly}>개봉</dt>
+                      <dd>{movie.release_date} 개봉</dd>
+                    </dl>
+                    <dl>
+                      <dt className={styles.soundOnly}>상영시간</dt>
+                      <dd>{movie.runtime}분</dd>
+                    </dl>
+                  </div>
+
+                  <ul className={styles.genres}>
+                    {movie.genres.map((g) => (
+                      <li key={g.id}>{g.name}</li>
+                    ))}
+                  </ul>
+
+                  {movie.overview !== "" ? (
+                    <div className={styles.desc}>
+                      <p>{movie.overview}</p>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -127,5 +142,3 @@ function Detail() {
     </>
   );
 }
-
-export default Detail;

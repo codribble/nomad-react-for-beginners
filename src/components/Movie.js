@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import styles from "./Movie.module.css";
 
-function Movie({ id, coverImg, title, year, rating, page }) {
+export default function Movie({ id, coverImg, title, year, rating, page }) {
   return (
     <div className={styles.item}>
       <div className={styles.thumbs}>
@@ -14,7 +14,8 @@ function Movie({ id, coverImg, title, year, rating, page }) {
       <div className={styles.overlay}>
         <h2 className={styles.title}>
           <Link
-            to={`/movie/${page}/${id}`}
+            to={`/movie/${id}`}
+            state={{ page: page }}
             title="더보기"
           >
             {title}
@@ -37,5 +38,3 @@ Movie.protoTypes = {
   rating: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
 };
-
-export default Movie;

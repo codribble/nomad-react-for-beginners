@@ -1,31 +1,41 @@
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import styles from "./Pagination.module.css";
-import { useEffect, useState } from "react";
 
-function Pagination({ current, total }) {
-  const [pageActive, setPageActive] = useState("");
+export default function Pagination({ setPage, current, total, limit }) {
+  const [active, setActive] = useState(1);
   const pages = [];
 
-  useEffect(() => {
-    setPageActive(current);
-  }, []);
+  const changePage = (e) => {
+    setPage(e.target.value);
+  };
 
-  for (let i = 0; i < 10; i++) {
-    pages.push(
-      <div
-        key={i}
-        className={`${styles.page} ${current === i + 1 ? "current" : ""}`}
-      >
-        <Link to={`/list/${i + 1}`}>{i + 1}</Link>
-      </div>
-    );
+  for (let i = 0; i < limit; i++) {
+    pages.push(i + 1);
   }
+
+  useEffect(() => {
+    setActive(current);
+  }, [current]);
+
+  // console.log(`pagination page: ${current}`);
 
   return (
     <>
-      <div className={styles.paging}>{pages.map((p) => p)}</div>
+      <div className={styles.paging}>
+        {pages &&
+          pages.map((num) => (
+            <button
+              key={num}
+              onClick={changePage}
+              value={num}
+              className={`${styles.page} ${
+                Number(active) === Number(num) && styles.current
+              }`}
+            >
+              {num}
+            </button>
+          ))}
+      </div>
     </>
   );
 }
-
-export default Pagination;

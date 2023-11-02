@@ -3,6 +3,12 @@
   width: calc((100% - 30px * 4) / 5);
 }
 
+.thumbs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .thumbs img {
   display: block;
   width: 100%;

@@ -1,22 +1,26 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Home.module.css";
+import List from "./List";
 
-function Home() {
+export default function Home() {
   const [loading, setLoading] = useState(true);
 
-  // setLoading(false);
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   return (
-    <div>
-      {loading ? (
-        <strong className={styles.loading}>Loading...</strong>
-      ) : (
-        <>
-          <h1 className={styles.title}>The Movies</h1>
-        </>
-      )}
-    </div>
+    <>
+      <div>
+        {loading ? (
+          <strong className={styles.loading}>Loading...</strong>
+        ) : (
+          <>
+            <h1 className={styles.title}>The Movies</h1>
+            <List page={`1`} />
+          </>
+        )}
+      </div>
+    </>
   );
 }
-
-export default Home;
