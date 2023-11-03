@@ -14,12 +14,11 @@
   background: none;
   border: 0;
   border-radius: 3px;
-  color: black;
+  color: white;
   text-decoration: none;
   cursor: pointer;
 }
 
 .paging .current {
   background-color: #ffc107;
-  color: white;
 }

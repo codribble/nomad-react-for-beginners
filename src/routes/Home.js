@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from "react";
-import styles from "./Home.module.css";
+// import styles from "./Home.module.css";
 import { Outlet } from "react-router-dom";
+import styled from "styled-components";
+
+const Loading = styled.strong`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100dvh;
+  font-size: 50px;
+`;
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -13,10 +23,10 @@ export default function Home() {
     <>
       <div>
         {loading ? (
-          <strong className={styles.loading}>Loading...</strong>
+          <Loading>Loading...</Loading>
         ) : (
           <>
-            <h1 className={styles.title}>The Movies</h1>
+            <Outlet />
           </>
         )}
       </div>
