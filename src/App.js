@@ -8,12 +8,12 @@ function App() {
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <Routes>
-        <Route
+        {/* <Route
           path="/"
           element={<Home />}
-        />
+        /> */}
         <Route
-          path="/list"
+          path="/"
           element={<List />}
         />
         <Route

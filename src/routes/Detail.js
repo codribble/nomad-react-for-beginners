@@ -15,7 +15,7 @@ export default function Detail() {
 
     const json = await response.json();
 
-    console.log(json);
+    // console.log(json);
     // console.log(location);
 
     setMovie(json);

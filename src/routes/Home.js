@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Home.module.css";
-import List from "./List";
+import { Outlet } from "react-router-dom";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,6 @@ export default function Home() {
         ) : (
           <>
             <h1 className={styles.title}>The Movies</h1>
-            <List page={`1`} />
           </>
         )}
       </div>

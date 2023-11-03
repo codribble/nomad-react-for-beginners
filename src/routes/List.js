@@ -6,10 +6,9 @@ import { useLocation } from "react-router-dom";
 
 export default function List() {
   const location = useLocation();
+  const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
-  const [page, setPage] = useState(
-    location.state.page ? location.state.page : 1
-  );
+  const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
 
   const getMovies = async () => {
@@ -26,34 +25,46 @@ export default function List() {
   };
 
   useEffect(() => {
+    if (location.state !== null && location.state.page)
+      setPage(location.state.page);
+  }, []);
+
+  useEffect(() => {
     getMovies();
+    setLoading(false);
   }, [page]);
 
   // console.log(`list page: ${page}`);
 
   return (
     <>
-      <div className={styles.movieList}>
-        {movies &&
-          movies.map((movie) => (
-            <Movie
-              key={movie.id}
-              id={movie.id}
-              year={movie.release_date}
-              coverImg={movie.poster_path}
-              title={movie.title}
-              rating={movie.vote_average}
-              page={page}
-            />
-          ))}
-      </div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <div className={styles.movieList}>
+            {movies &&
+              movies.map((movie) => (
+                <Movie
+                  key={movie.id}
+                  id={movie.id}
+                  year={movie.release_date}
+                  coverImg={movie.poster_path}
+                  title={movie.title}
+                  rating={movie.vote_average}
+                  page={page}
+                />
+              ))}
+          </div>
 
-      <Pagination
-        setPage={setPage}
-        current={page}
-        limit={5}
-        total={totalPage}
-      />
+          <Pagination
+            setPage={setPage}
+            current={page}
+            limit={5}
+            total={totalPage}
+          />
+        </>
+      )}
     </>
   );
 }
